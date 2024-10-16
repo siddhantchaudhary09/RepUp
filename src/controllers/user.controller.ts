@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
+import jwt, { Secret } from "jsonwebtoken";
 import User, { Gender, Goal, IUser } from "../models/User.model";
 
 interface RegisterUserRequestBody {
@@ -9,6 +10,9 @@ interface RegisterUserRequestBody {
   age: number;
   gender: Gender;
   goal: Goal;
+  height: string;
+  weight: string;
+  token?: string;
 }
 
 export const registerUser = async (
@@ -16,9 +20,19 @@ export const registerUser = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { email, password, username, age, gender, goal } = req.body;
+    const { email, password, username, age, gender, goal, height, weight } =
+      req.body;
 
-    if (!email || !password || !username || !age || !gender || !goal) {
+    if (
+      !email ||
+      !password ||
+      !username ||
+      !age ||
+      !gender ||
+      !goal ||
+      !height ||
+      !weight
+    ) {
       res.status(400).json({ message: "Please fill in all fields" });
       return;
     }
@@ -39,8 +53,8 @@ export const registerUser = async (
       gender,
       goal,
       mobile: "",
-      height: "",
-      weight: "",
+      height,
+      weight,
     });
 
     await newUser.save();
@@ -77,20 +91,40 @@ export const loginUser = async (
       return;
     }
 
-    const isPasswordMatch = await bcrypt.compare(password, LoginUser.password);
+    if (await bcrypt.compare(password, LoginUser.password)) {
+      const payload = {
+        email: LoginUser.email,
+        id: LoginUser._id,
+      };
+      const token = jwt.sign(payload, process.env.JWT_SECRET as Secret, {
+        expiresIn: "2h",
+      });
+      LoginUser.token = token;
+      LoginUser.password = "";
 
-    LoginUser.password = "";
+      const options: {
+        expires: Date;
+        sameSite: "strict" | "lax" | "none"; // Specify valid string literals
+        httpOnly: boolean;
+        secure: boolean;
+      } = {
+        expires: new Date(Date.now() + 3600 * 1000), // Example expiry date
+        sameSite: "lax", // Use one of the allowed values
+        httpOnly: true,
+        secure: true,
+      };
 
-    if (!isPasswordMatch) {
-      res.status(400).json({ message: "Invalid credentials" });
+      res
+        .cookie("token", token, options)
+        .status(200)
+        .json({ user: LoginUser, message: "Logged in successfully" });
       return;
     } else {
-      res
-        .status(200)
-        .json({ message: "User logged in successfully", user: LoginUser });
+      res.status(400).json("Password is incorrect");
+      return;
     }
   } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
-    return;
+    console.error(error);
+    res.status(500).json("Login failed, try again later");
   }
 };

@@ -1,4 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
+import { IRoutine } from "./Routine.Model.ts";
+import { IUserexcercises } from "./Userexcercises.model.ts";
 
 // Define enums for gender and goal
 export enum Gender {
@@ -14,6 +16,7 @@ export enum Goal {
 
 // User interface
 export interface IUser extends Document {
+  _id: string;
   username: string;
   email: string;
   password: string;
@@ -23,6 +26,9 @@ export interface IUser extends Document {
   height?: string;
   weight?: string;
   goal: Goal; // Use the Goal enum
+  Userexcercise?: IUserexcercises[];
+  routine?: IRoutine[];
+  token?: string | null;
 }
 
 // User schema
@@ -62,10 +68,22 @@ const UserSchema: Schema<IUser> = new Schema(
       type: String,
       enum: Object.values(Goal), // Use enum values
     },
+    Userexcercise: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Userexcercises",
+      },
+    ],
+    routine: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Routine",
+      },
+    ],
   },
   { timestamps: true }
 );
 
-const UserModel = mongoose.model<IUser>("User", UserSchema);
+const User = mongoose.model<IUser>("User", UserSchema);
 
-export default UserModel;
+export default User;
