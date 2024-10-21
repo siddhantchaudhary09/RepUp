@@ -1,19 +1,10 @@
 {
   "version": 2,
   "name": "wk-log",
-  "builds": [
-    {
-      "src": "src/index.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["tsconfig.json"]
-      }
-    }
-  ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "dist/index.js"
+      "dest": "/api/index.js"
     }
   ],
   "env": {
