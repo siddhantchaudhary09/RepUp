@@ -32,11 +32,14 @@ export const registerExercise = async (
       { new: true }
     );
 
-    res
-      .status(201)
-      .json({ message: "Exercise created", exercise: newExercise });
+    res.status(201).json({
+      status: 200,
+      message: "Exercise created",
+      exercise: newExercise,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
+    return;
   }
 };

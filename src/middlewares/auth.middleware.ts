@@ -19,6 +19,7 @@ export const authMiddleware = async (
   if (!token) {
     console.log("Token missing");
     res.status(401).json("Token missing");
+    return;
   }
 
   try {
@@ -32,5 +33,6 @@ export const authMiddleware = async (
   } catch (error) {
     console.log("JWT verification error:", error);
     res.status(401).json("Unauthorized request");
+    return;
   }
 };

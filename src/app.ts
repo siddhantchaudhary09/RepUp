@@ -1,13 +1,15 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import dotenv from "dotenv";
 import express, { json, urlencoded } from "express";
 import fileUpload from "express-fileupload";
 import excerciseRouter from "./routes/excercise.routes.ts";
 import routineRouter from "./routes/routine.routes.ts";
+import setRouter from "./routes/set.routes.ts";
 import userRouter from "./routes/user.routes.ts";
-const app = express();
+dotenv.config();
 
-// Middleware setup
+const app = express();
 app.use(cookieParser());
 
 app.use(
@@ -16,6 +18,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(json({ limit: "16kb" }));
 app.use(urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
@@ -33,5 +36,6 @@ app.get("/", (req, res) => {
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/routine", routineRouter);
 app.use("/api/v1/excercise", excerciseRouter);
+app.use("/api/v1/set", setRouter);
 
 export { app };

@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import jwt, { Secret } from "jsonwebtoken";
+import { Imiddleware } from "../middlewares/auth.middleware.ts";
 import User, { Gender, Goal, IUser } from "../models/User.model";
 
 interface RegisterUserRequestBody {
@@ -84,7 +85,9 @@ export const loginUser = async (
       res.status(400).json({ message: "Please fill in all fields" });
       return;
     }
-    const LoginUser = await User.findOne({ email });
+    const LoginUser = await User.findOne({ email })
+      .populate("Userexcercise")
+      .populate("routine");
 
     if (!LoginUser) {
       res.status(400).json({ message: "User does not exist" });
@@ -104,12 +107,12 @@ export const loginUser = async (
 
       const options: {
         expires: Date;
-        sameSite: "strict" | "lax" | "none"; // Specify valid string literals
+        sameSite: "lax" | "none"; // Specify valid string literals
         httpOnly: boolean;
         secure: boolean;
       } = {
         expires: new Date(Date.now() + 3600 * 1000), // Example expiry date
-        sameSite: "lax", // Use one of the allowed values
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Use one of the allowed values
         httpOnly: true,
         secure: true,
       };
@@ -126,5 +129,28 @@ export const loginUser = async (
   } catch (error) {
     console.error(error);
     res.status(500).json("Login failed, try again later");
+    return;
   }
+};
+
+export const getCurrentUser = async (
+  req: Imiddleware,
+  res: Response
+): Promise<void> => {
+  const user = req?.user;
+
+  // Retrieve the user from the database if needed (optional)
+  const userdb = await User.findById(user?.id)
+    .populate("Userexcercise")
+    .populate("routine");
+
+  if (!userdb) {
+    res.status(404).json({ status: 404, message: "User not found." });
+  }
+
+  res.status(200).json({
+    status: 200,
+    user: userdb,
+    message: "User retrieved successfully.",
+  });
 };
