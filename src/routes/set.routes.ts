@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createSet } from "../controllers/set.controller.ts";
+import { createSet } from "../controllers/set.controller";
 
 const router = Router();
 

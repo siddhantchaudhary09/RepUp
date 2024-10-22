@@ -2,8 +2,8 @@ import { Router } from "express";
 import {
   createExcercise,
   deleteExcercise,
-} from "../controllers/Excercise.controller.ts";
-import { authMiddleware } from "../middlewares/auth.middleware.ts";
+} from "../controllers/Excercise.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 const router = Router();
 

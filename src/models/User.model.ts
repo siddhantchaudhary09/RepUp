@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { IRoutine } from "./Routine.Model.ts";
-import { IUserexcercises } from "./Userexcercises.model.ts";
+import { IRoutine } from "./Routine.Model";
+import { IUserexcercises } from "./Userexcercises.model";
 
 // Define enums for gender and goal
 export enum Gender {

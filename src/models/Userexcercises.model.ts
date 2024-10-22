@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { excerciseCategory, muscleGroup } from "./Excercise.model.ts";
+import { excerciseCategory, muscleGroup } from "./Excercise.model";
 
 export interface IUserexcercises extends Document {
   _id: string;

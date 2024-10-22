@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { Imiddleware } from "../middlewares/auth.middleware.ts";
+import { Imiddleware } from "../middlewares/auth.middleware";
 import User from "../models/User.model";
 import {
   IUserexcercises,

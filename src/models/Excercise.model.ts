@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { Iset } from "./Set.model.ts";
+import { Iset } from "./Set.model";
 
 export enum excerciseCategory {
   beginner = "beginner",

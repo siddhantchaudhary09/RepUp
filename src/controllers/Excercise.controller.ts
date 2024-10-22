@@ -1,8 +1,8 @@
 import { Response } from "express";
-import { Imiddleware } from "../middlewares/auth.middleware.ts";
-import { Excercise } from "../models/Excercise.model.ts";
-import { Routine } from "../models/Routine.Model.ts";
-import { Userexcercises } from "../models/Userexcercises.model.ts";
+import { Imiddleware } from "../middlewares/auth.middleware";
+import { Excercise } from "../models/Excercise.model";
+import { Routine } from "../models/Routine.Model";
+import { Userexcercises } from "../models/Userexcercises.model";
 
 export const createExcercise = async (
   req: Imiddleware,

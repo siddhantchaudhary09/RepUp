@@ -4,8 +4,8 @@ import {
   loginUser,
   registerUser,
 } from "../controllers/user.controller";
-import { registerExercise } from "../controllers/userexcercises.controller.ts";
-import { authMiddleware } from "../middlewares/auth.middleware.ts";
+import { registerExercise } from "../controllers/userexcercises.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
 const router = Router();
 
 router.route("/signup").post(registerUser);

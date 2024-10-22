@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import jwt, { Secret } from "jsonwebtoken";
-import { Imiddleware } from "../middlewares/auth.middleware.ts";
+import { Imiddleware } from "../middlewares/auth.middleware";
 import User, { Gender, Goal, IUser } from "../models/User.model";
 
 interface RegisterUserRequestBody {

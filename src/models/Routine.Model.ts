@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { IExcercise } from "./Excercise.model.ts";
+import { IExcercise } from "./Excercise.model";
 
 export interface IRoutine extends Document {
   _id: string;

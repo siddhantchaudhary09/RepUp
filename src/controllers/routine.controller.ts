@@ -1,7 +1,7 @@
-import { Response } from "express";
-import { Imiddleware } from "../middlewares/auth.middleware.ts";
-import { Routine } from "../models/Routine.Model.ts";
-import User from "../models/User.model.ts";
+import { Request, Response } from "express";
+import { Imiddleware } from "../middlewares/auth.middleware";
+import { Routine } from "../models/Routine.Model";
+import User from "../models/User.model";
 
 export const createRoutine = async (
   req: Imiddleware,
@@ -66,6 +66,32 @@ export const deleteroutine = async (
     });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+    return;
+  }
+};
+
+export const routineInfo = async (
+  req: Request, // Standard order
+  res: Response
+): Promise<void> => {
+  try {
+    const { routineId } = req.body;
+
+    const routine = await Routine.findById(routineId).populate("excercises");
+
+    if (!routine) {
+      res.status(404).json({ message: "Routine not found" });
+      return;
+    }
+
+    res.status(200).json({
+      status: 200,
+      message: "Routine found",
+      routine,
+    });
+  } catch (error) {
+    console.error(error); // Log the error for debugging
     res.status(500).json({ message: "Internal server error" });
   }
 };

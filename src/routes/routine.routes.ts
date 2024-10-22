@@ -2,12 +2,14 @@ import { Router } from "express";
 import {
   createRoutine,
   deleteroutine,
-} from "../controllers/routine.controller.ts";
-import { authMiddleware } from "../middlewares/auth.middleware.ts";
+  routineInfo,
+} from "../controllers/routine.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 const router = Router();
 
 router.route("/createroutine").post(authMiddleware, createRoutine);
 router.route("/deleteroutine/:id").delete(authMiddleware, deleteroutine);
+router.route("/getroutine").post(routineInfo);
 
 export default router;

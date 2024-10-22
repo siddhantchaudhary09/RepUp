@@ -3,10 +3,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express, { json, urlencoded } from "express";
 import fileUpload from "express-fileupload";
-import excerciseRouter from "./routes/excercise.routes.ts";
-import routineRouter from "./routes/routine.routes.ts";
-import setRouter from "./routes/set.routes.ts";
-import userRouter from "./routes/user.routes.ts";
+import excerciseRouter from "./routes/excercise.routes";
+import routineRouter from "./routes/routine.routes";
+import setRouter from "./routes/set.routes";
+import userRouter from "./routes/user.routes";
 dotenv.config();
 
 const app = express();

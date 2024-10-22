@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { Excercise } from "../models/Excercise.model.ts";
-import { Iset, Set } from "../models/Set.model.ts";
+import { Excercise } from "../models/Excercise.model";
+import { Iset, Set } from "../models/Set.model";
 
 export const createSet = async (req: Request, res: Response): Promise<void> => {
   try {
