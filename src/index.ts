@@ -7,7 +7,7 @@ dotenv.config({
 
 connectDB()
   .then(() => {
-    app.listen(3000, () => {
+    app.listen(process.env.PORT, () => {
       console.log(`Server is running on 3000`);
     });
   })
