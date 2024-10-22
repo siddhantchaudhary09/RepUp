@@ -3,7 +3,7 @@
   "name": "wk-log",
   "routes": [
     {
-      "src": "/api/(.*)",
+      "src": "/(.*)",
       "dest": "/api/index.js"
     }
   ],

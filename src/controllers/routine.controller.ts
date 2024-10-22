@@ -27,6 +27,7 @@ export const createRoutine = async (
     });
 
     res.status(201).json({
+      status: 200,
       message: "Routine created successfully",
       routine: newRoutine,
     });
