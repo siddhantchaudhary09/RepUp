@@ -11,7 +11,7 @@ dotenv_1.default.config({
 });
 (0, index_1.default)()
     .then(() => {
-    app_1.app.listen(3000, () => {
+    app_1.app.listen(process.env.PORT, () => {
         console.log(`Server is running on 3000`);
     });
 })

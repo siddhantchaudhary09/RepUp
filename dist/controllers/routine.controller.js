@@ -20,7 +20,7 @@ const createRoutine = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const { title } = req.body;
         const userid = (_a = req === null || req === void 0 ? void 0 : req.user) === null || _a === void 0 ? void 0 : _a.id;
-        if (!title) {
+        if (!title || !userid) {
             res.status(400).json({ message: "Please fill in all fields" });
             return;
         }
@@ -32,6 +32,7 @@ const createRoutine = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             $push: { routine: newRoutine._id },
         });
         res.status(201).json({
+            status: 200,
             message: "Routine created successfully",
             routine: newRoutine,
         });
