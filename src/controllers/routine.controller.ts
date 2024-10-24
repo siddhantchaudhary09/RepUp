@@ -11,7 +11,7 @@ export const createRoutine = async (
     const { title } = req.body;
     const userid = req?.user?.id;
 
-    if (!title) {
+    if (!title || !userid) {
       res.status(400).json({ message: "Please fill in all fields" });
       return;
     }
