@@ -79,7 +79,12 @@ export const routineInfo = async (
   try {
     const { routineId } = req.body;
 
-    const routine = await Routine.findById(routineId).populate("excercises");
+    const routine = await Routine.findById(routineId).populate({
+      path: "excercises",
+      populate: {
+        path: "Set",
+      },
+    });
 
     if (!routine) {
       res.status(404).json({ message: "Routine not found" });

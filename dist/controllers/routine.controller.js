@@ -74,7 +74,12 @@ const routineInfo = (req, // Standard order
 res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { routineId } = req.body;
-        const routine = yield Routine_Model_1.Routine.findById(routineId).populate("excercises");
+        const routine = yield Routine_Model_1.Routine.findById(routineId).populate({
+            path: "excercises",
+            populate: {
+                path: "Set",
+            },
+        });
         if (!routine) {
             res.status(404).json({ message: "Routine not found" });
             return;
