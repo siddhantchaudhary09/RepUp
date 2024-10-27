@@ -4,16 +4,15 @@ import { Iset, Set } from "../models/Set.model";
 
 export const createSet = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { weight, reps, excerciseId } = req.body;
+    const { excerciseId, sno } = req.body;
 
-    if (!weight || !reps || !excerciseId) {
+    if (!excerciseId || !sno) {
       res.status(400).json({ message: "Missing required fields" });
       return;
     }
 
     const Newset: Iset = await Set.create({
-      weight,
-      reps,
+      sno,
     });
 
     const excercise = await Excercise.findByIdAndUpdate(
@@ -28,6 +27,32 @@ export const createSet = async (req: Request, res: Response): Promise<void> => {
     return;
   } catch (error) {
     res.status(500).json({ message: "Error in creating set" });
+    return;
+  }
+};
+
+export const updateSet = async (req: Request, res: Response): Promise<void> => {
+  const { weight, reps, setid } = req.body;
+  if (!weight || !reps || !setid) {
+    res.status(400).json({ message: "Missing required fields" });
+    return;
+  }
+  try {
+    const set = await Set.findByIdAndUpdate(setid, {
+      weight,
+      reps,
+    });
+    res.status(200).json(set);
+  } catch (error) {
+    res.status(500).json({ message: "Error in updating set" });
+    return;
+  }
+};
+
+export const deleteSet = async (req: Request, res: Response): Promise<void> => {
+  try {
+  } catch (error) {
+    res.status(500).json({ message: "Error in deleting set" });
     return;
   }
 };

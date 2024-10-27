@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { createSet } from "../controllers/set.controller";
+import { createSet, updateSet } from "../controllers/set.controller";
 
 const router = Router();
+router.route("/updateset").post(updateSet);
 
 router.route("/createset").post(createSet);
 

@@ -9,19 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createSet = void 0;
+exports.deleteSet = exports.updateSet = exports.createSet = void 0;
 const Excercise_model_1 = require("../models/Excercise.model");
 const Set_model_1 = require("../models/Set.model");
 const createSet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { weight, reps, excerciseId } = req.body;
-        if (!weight || !reps || !excerciseId) {
+        const { excerciseId, sno } = req.body;
+        if (!excerciseId || !sno) {
             res.status(400).json({ message: "Missing required fields" });
             return;
         }
         const Newset = yield Set_model_1.Set.create({
-            weight,
-            reps,
+            sno,
         });
         const excercise = yield Excercise_model_1.Excercise.findByIdAndUpdate(excerciseId, {
             $push: { Set: Newset._id },
@@ -35,3 +34,31 @@ const createSet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.createSet = createSet;
+const updateSet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { weight, reps, setid } = req.body;
+    if (!weight || !reps || !setid) {
+        res.status(400).json({ message: "Missing required fields" });
+        return;
+    }
+    try {
+        const set = yield Set_model_1.Set.findByIdAndUpdate(setid, {
+            weight,
+            reps,
+        });
+        res.status(200).json(set);
+    }
+    catch (error) {
+        res.status(500).json({ message: "Error in updating set" });
+        return;
+    }
+});
+exports.updateSet = updateSet;
+const deleteSet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+    }
+    catch (error) {
+        res.status(500).json({ message: "Error in deleting set" });
+        return;
+    }
+});
+exports.deleteSet = deleteSet;

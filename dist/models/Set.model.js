@@ -26,13 +26,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Set = exports.SetSchema = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 exports.SetSchema = new mongoose_1.Schema({
+    sno: {
+        type: Number,
+    },
     weight: {
         type: Number,
-        required: true,
     },
     reps: {
         type: Number,
-        required: true,
     },
 }, { timestamps: true });
 exports.Set = mongoose_1.default.model("Set", exports.SetSchema);

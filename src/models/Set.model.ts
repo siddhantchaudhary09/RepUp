@@ -2,19 +2,21 @@ import mongoose, { Document, Schema } from "mongoose";
 
 export interface Iset extends Document {
   _id: string;
-  weight: number;
-  reps: number;
+  sno?: number;
+  weight?: number;
+  reps?: number;
 }
 
 export const SetSchema: Schema<Iset> = new Schema(
   {
+    sno: {
+      type: Number,
+    },
     weight: {
       type: Number,
-      required: true,
     },
     reps: {
       type: Number,
-      required: true,
     },
   },
   { timestamps: true }
